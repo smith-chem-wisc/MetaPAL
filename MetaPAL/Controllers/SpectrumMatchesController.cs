@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using BayesianEstimation;
 using MetaPAL.Data;
-using MetaPAL.DataOperations;
 using MetaPAL.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Readers;
 
 namespace MetaPAL.Controllers
@@ -27,7 +22,7 @@ namespace MetaPAL.Controllers
         {
             // TEMPORARY: remove all spectrum matches from database
             //await Task.Run(() => DataOperations.DataOperations.RemoveAll<SpectrumMatch>(_context));
-            
+
             if (_context.SpectrumMatch == null)
                 return Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.");
             return View(await _context.SpectrumMatch.ToListAsync());
@@ -76,7 +71,7 @@ namespace MetaPAL.Controllers
         public async Task<IActionResult> ShowSearchResults(string SearchPhrase)
         {
             return _context.SpectrumMatch != null ?
-                View(await _context.SpectrumMatch.Where(b=>b.BaseSeq.Contains(SearchPhrase)).ToListAsync()) :
+                View(await _context.SpectrumMatch.Where(b => b.BaseSeq.Contains(SearchPhrase)).ToListAsync()) :
                 Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.");
         }
         // GET: SpectrumMatches/Details/5
@@ -203,14 +198,32 @@ namespace MetaPAL.Controllers
             {
                 _context.SpectrumMatch.Remove(spectrumMatch);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SpectrumMatchExists(int id)
         {
-          return (_context.SpectrumMatch?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.SpectrumMatch?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        //POST: ReadPSMTSVFile using the location of the file
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ReadPSMTSVFile(string path)
+        {
+            var spectrumMatches =
+                SpectrumMatchTsvReader.ReadTsv(Path.Combine(path), out _)
+                    .Select(x => SpectrumMatch.FromSpectrumMatchTsv(x));
+
+            if (ModelState.IsValid)
+            {
+                _context.AddRange(spectrumMatches); 
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(path);
         }
     }
 }
