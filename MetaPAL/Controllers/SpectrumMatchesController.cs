@@ -11,7 +11,7 @@ namespace MetaPAL.Controllers
     public class SpectrumMatchesController : Controller
     {
         private readonly ApplicationDbContext _context;
-
+        
         public SpectrumMatchesController(ApplicationDbContext context)
         {
             _context = context;
@@ -31,7 +31,7 @@ namespace MetaPAL.Controllers
         // GET: UploadSpectralMatchesForm
         public async Task<IActionResult> UploadSpectralMatchesForm()
         {
-            return _context.SpectrumMatch != null ?
+            return _context.SpectrumMatch.SingleOrDefault() != null ?
                 View() :
                 Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.");
         }
@@ -224,6 +224,22 @@ namespace MetaPAL.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(path);
+        }
+
+        //Pagination (faster calls to the server)
+        [HttpGet]
+        public IEnumerable<SpectrumMatch> GetSpectrumMatches(int pageNumber = 1, int pageSize = 50)
+        {
+            var totalCount = _context.SpectrumMatch.Count();
+
+            var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
+
+            var spectrumPerPage = _context.SpectrumMatch
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return spectrumPerPage;
         }
     }
 }

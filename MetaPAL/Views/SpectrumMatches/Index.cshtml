@@ -10,7 +10,17 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<table class="table" style="overflow-x: auto;">
+<ul>
+    @for(int i = 1; i <= Model.Count(); i++)
+    {
+        <li>
+            <a asp-action="GetSpectrumMatches" 
+               asp-route-id="@i">SpectrumMatches @i</a>
+        </li>
+    })
+</ul>
+
+<table class="table" asp-action="GetSpectrumMatches" style="overflow-x: auto;">
     <thead>
         <tr>
             <th>
