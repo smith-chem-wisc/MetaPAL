@@ -15,15 +15,19 @@
             <th>
                 Unique ID
             </th>
+
             <th>
                 <a> Accession </a>
             </th>
+
             <th>
                 <a> Full Sequence </a>
             </th>
+
             <th>
                 <a> Score </a>
             </th>
+
             <th>
                 Spectrum Match
             </th>
@@ -36,6 +40,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Accession)
             </td>
@@ -43,9 +48,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.FullSequence)
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Score)
             </td>
+
             <td>
                 <a asp-controller="SpectrumMatches" asp-action="Details" asp-route-id="@item.Id">Details</a>
             </td>
@@ -53,6 +60,7 @@
     }
     </tbody>
 </table>
+
 
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
