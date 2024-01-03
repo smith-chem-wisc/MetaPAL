@@ -1,8 +1,11 @@
-﻿using BayesianEstimation;
+﻿
+using System.ComponentModel;
+using BayesianEstimation;
 using MetaPAL.Data;
 using MetaPAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.ObjectModelRemoting;
 using Microsoft.EntityFrameworkCore;
 using Readers;
 
@@ -17,16 +20,16 @@ namespace MetaPAL.Controllers
             _context = context;
         }
 
-        // GET: SpectrumMatches
-        public async Task<IActionResult> Index()
-        {
-            // TEMPORARY: remove all spectrum matches from database
-            //await Task.Run(() => DataOperations.DataOperations.RemoveAll<SpectrumMatch>(_context));
+        //// GET: SpectrumMatches
+        //public async Task<IActionResult> Index()
+        //{
+        //    // TEMPORARY: remove all spectrum matches from database
+        //    //await Task.Run(() => DataOperations.DataOperations.RemoveAll<SpectrumMatch>(_context));
 
-            if (_context.SpectrumMatch == null)
-                return Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.");
-            return View(await _context.SpectrumMatch.ToListAsync());
-        }
+        //    if (_context.SpectrumMatch == null)
+        //        return Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.");
+        //    return View(await _context.SpectrumMatch.ToListAsync());
+        //}
 
         // GET: UploadSpectralMatchesForm
         public async Task<IActionResult> UploadSpectralMatchesForm()
@@ -72,7 +75,8 @@ namespace MetaPAL.Controllers
         public async Task<IActionResult> ShowSearchResults(string SearchPhrase)
         {
             return _context.SpectrumMatch != null ?
-                View(await _context.SpectrumMatch.Where(b => b.BaseSequence.Contains(SearchPhrase)).ToListAsync()) :
+                View(await _context.SpectrumMatch.Where(b =>
+                    b.BaseSequence.Contains(SearchPhrase)).ToListAsync()) :
                 Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.");
         }
         // GET: SpectrumMatches/Details/5
@@ -216,11 +220,12 @@ namespace MetaPAL.Controllers
         {
             var spectrumMatches =
                 SpectrumMatchTsvReader.ReadTsv(Path.Combine(path), out _)
+                    .Where(x => !x.Accession.Contains("DECOY") && !x.Accession.Contains("|")) //string input was failing to parse (not sure why but i assume it's the | character)
                     .Select(x => SpectrumMatch.FromSpectrumMatchTsv(x));
 
             if (ModelState.IsValid)
             {
-                _context.AddRange(spectrumMatches); 
+                _context.AddRange(spectrumMatches);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -241,6 +246,40 @@ namespace MetaPAL.Controllers
                 .ToList();
 
             return spectrumPerPage;
+        }
+
+        [HttpGet]
+        public IEnumerable<SpectrumMatch> NextPage(int pageNumber = 1, int pageSize = 50)
+        {
+            var totalCount = _context.SpectrumMatch.Count();
+
+            var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
+
+            var spectrumPerPage = _context.SpectrumMatch
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return spectrumPerPage;
+        }
+
+
+        public async Task<IActionResult> Index(string currentFilter, string searchString,
+            int? pageNumber)
+        {
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            int pageSize = 50;
+            return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                .CreateAsync(_context.SpectrumMatch.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
     }
 }
