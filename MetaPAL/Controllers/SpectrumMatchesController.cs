@@ -72,7 +72,7 @@ namespace MetaPAL.Controllers
         public async Task<IActionResult> ShowSearchResults(string SearchPhrase)
         {
             return _context.SpectrumMatch != null ?
-                View(await _context.SpectrumMatch.Where(b => b.BaseSeq.Contains(SearchPhrase)).ToListAsync()) :
+                View(await _context.SpectrumMatch.Where(b => b.BaseSequence.Contains(SearchPhrase)).ToListAsync()) :
                 Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.");
         }
         // GET: SpectrumMatches/Details/5
