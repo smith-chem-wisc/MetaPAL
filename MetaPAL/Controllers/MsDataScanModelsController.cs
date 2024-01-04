@@ -19,20 +19,20 @@ namespace MetaPAL.Controllers
         // GET: MsDataScanModels
         public async Task<IActionResult> Index()
         {
-            return _context.MsDataScan != null ?
-                        View(await _context.MsDataScan.ToListAsync()) :
+            return _context.MsDataScans != null ?
+                        View(await _context.MsDataScans.ToListAsync()) :
                         Problem("Entity set 'ApplicationDbContext.MsDataScan'  is null.");
         }
 
         // GET: MsDataScanModels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.MsDataScan == null)
+            if (id == null || _context.MsDataScans == null)
             {
                 return NotFound();
             }
 
-            var msDataScanModel = await _context.MsDataScan
+            var msDataScanModel = await _context.MsDataScans
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (msDataScanModel == null)
             {
@@ -67,12 +67,12 @@ namespace MetaPAL.Controllers
         // GET: MsDataScanModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.MsDataScan == null)
+            if (id == null || _context.MsDataScans == null)
             {
                 return NotFound();
             }
 
-            var msDataScanModel = await _context.MsDataScan.FindAsync(id);
+            var msDataScanModel = await _context.MsDataScans.FindAsync(id);
             if (msDataScanModel == null)
             {
                 return NotFound();
@@ -118,12 +118,12 @@ namespace MetaPAL.Controllers
         // GET: MsDataScanModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.MsDataScan == null)
+            if (id == null || _context.MsDataScans == null)
             {
                 return NotFound();
             }
 
-            var msDataScanModel = await _context.MsDataScan
+            var msDataScanModel = await _context.MsDataScans
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (msDataScanModel == null)
             {
@@ -138,14 +138,14 @@ namespace MetaPAL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.MsDataScan == null)
+            if (_context.MsDataScans == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.MsDataScan'  is null.");
             }
-            var msDataScanModel = await _context.MsDataScan.FindAsync(id);
+            var msDataScanModel = await _context.MsDataScans.FindAsync(id);
             if (msDataScanModel != null)
             {
-                _context.MsDataScan.Remove(msDataScanModel);
+                _context.MsDataScans.Remove(msDataScanModel);
             }
 
             await _context.SaveChangesAsync();
@@ -154,7 +154,7 @@ namespace MetaPAL.Controllers
 
         private bool MsDataScanModelExists(int id)
         {
-            return (_context.MsDataScan?.Any(e => 
+            return (_context.MsDataScans?.Any(e => 
                 e.Id == id)).GetValueOrDefault();
         }
 
@@ -170,7 +170,7 @@ namespace MetaPAL.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.MsDataScan.AddRange(msDataFile);
+                _context.MsDataScans.AddRange(msDataFile);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
