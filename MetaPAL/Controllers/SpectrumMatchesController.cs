@@ -1,11 +1,9 @@
-﻿
-using System.ComponentModel;
-using BayesianEstimation;
+﻿using BayesianEstimation;
+using MathNet.Numerics;
 using MetaPAL.Data;
 using MetaPAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Build.ObjectModelRemoting;
 using Microsoft.EntityFrameworkCore;
 using Readers;
 
@@ -14,22 +12,106 @@ namespace MetaPAL.Controllers
     public class SpectrumMatchesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        
+
         public SpectrumMatchesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        //// GET: SpectrumMatches
-        //public async Task<IActionResult> Index()
-        //{
-        //    // TEMPORARY: remove all spectrum matches from database
-        //    //await Task.Run(() => DataOperations.DataOperations.RemoveAll<SpectrumMatch>(_context));
+        // GET: SpectrumMatches
+        public async Task<IActionResult> Index(SortingOptions sortingParameter = SortingOptions.Default)
+        {
+            // TEMPORARY: remove all spectrum matches from database
+            //await Task.Run(() => DataOperations.DataOperations.RemoveAll<SpectrumMatch>(_context));
 
-        //    if (_context.SpectrumMatch == null)
-        //        return Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.");
-        //    return View(await _context.SpectrumMatch.ToListAsync());
-        //}
+            //big switch statement for sorting the database by different parameters
+            #region SortingParametersSwitch
+
+            switch (sortingParameter)
+            {
+                case SortingOptions.Default: 
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .ToListAsync());
+
+                case SortingOptions.AscendingAmbiguityLevel:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.AmbiguityLevel)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingAmbiguityLevel:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.MatchedFragmentIons)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingDeltaScore:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.DeltaScore)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingDeltaScore:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.DeltaScore)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingMassDiffDa:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.MassDiffDa)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingMassDiffDa:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.MassDiffDa)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingMassDiffPpm:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.MassDiffPpm)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingMassDiffPpm:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.MassDiffPpm)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingMatchedFragmentIons:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.MatchedFragmentIons)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingMatchedFragmentIons:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.MatchedFragmentIons)
+                            .ToListAsync());
+            }
+
+            #endregion
+
+            if (_context.SpectrumMatch == null)
+                return Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.");
+            return View(await _context.SpectrumMatch.ToListAsync());
+        }
 
         // GET: UploadSpectralMatchesForm
         public async Task<IActionResult> UploadSpectralMatchesForm()
@@ -39,6 +121,54 @@ namespace MetaPAL.Controllers
                 Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.");
         }
 
+        //Sorting Enum
+#region SortingEnum
+        public enum SortingOptions
+        {
+            Default,
+            AscendingMatchedFragmentIons,
+            DescendingMatchedFragmentIons,
+            AscendingPrecursorScanNum,
+            DescendingPrecursorScanNum,
+            AscendingPrecursorCharge,
+            DescendingPrecursorCharge,
+            AscendingPrecursorMz,
+            DescendingPrecursorMz,
+            AscendingPrecursorMass,
+            DescendingPrecursorMass,
+            AscendingRetentionTime,
+            DescendingRetentionTime,
+            AscendingScore,
+            DescendingScore,
+            AscendingSpectrumMatchCount,
+            DescendingSpectrumMatchCount,
+            AscendingQValue,
+            DescendingQValue,
+            AscendingPEP,
+            DescendingPEP,
+            AscendingPEP_QValue,
+            DescendingPEP_QValue,
+            AscendingTotalIonCurrent,
+            DescendingTotalIonCurrent,
+            AscendingDeltaScore,
+            DescendingDeltaScore,
+            AscendingAmbiguityLevel,
+            DescendingAmbiguityLevel,
+            AscendingMissedCleavage,
+            DescendingMissedCleavage,
+            AscendingMonoisotopicMass,
+            DescendingMonoisotopicMass,
+            AscendingMassDiffDa,
+            DescendingMassDiffDa,
+            AscendingMassDiffPpm,
+            DescendingMassDiffPpm,
+            AscendingSpliceSites,
+            DescendingSpliceSites,
+            Decoy,
+            Contaminant,
+            Target
+        }
+#endregion
         // GET: UploadSpectrumMatches
         public async Task<IActionResult> UploadSpectralMatches(string PsmPath)
         {
