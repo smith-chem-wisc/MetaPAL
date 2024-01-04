@@ -4,6 +4,7 @@ using MetaPAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MetaPAL.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240104160959_BuildMsDataScanTable")]
+    partial class BuildMsDataScanTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,69 +24,6 @@ namespace MetaPAL.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("MetaPAL.Models.DataFile", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ExperimentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FileNameWithoutExtension")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExperimentId");
-
-                    b.ToTable("DataFiles");
-                });
-
-            modelBuilder.Entity("MetaPAL.Models.Experiment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("RepositoryIdentifier")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Experiments");
-                });
-
-            modelBuilder.Entity("MetaPAL.Models.MetaData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("DataFileId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DataFileId");
-
-                    b.ToTable("MetaData");
-                });
-
             modelBuilder.Entity("MetaPAL.Models.MsDataScanModel", b =>
                 {
                     b.Property<int>("Id")
@@ -92,9 +31,6 @@ namespace MetaPAL.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("DataFileId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("DissociationMethod")
                         .HasColumnType("int");
@@ -189,9 +125,6 @@ namespace MetaPAL.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DataFileId")
-                        .HasColumnType("int");
-
                     b.Property<string>("DecoyContamTarget")
                         .HasColumnType("nvarchar(max)");
 
@@ -203,9 +136,6 @@ namespace MetaPAL.Data.Migrations
 
                     b.Property<string>("EssentialSequence")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ExperimentId")
-                        .HasColumnType("int");
 
                     b.Property<string>("FileNameWithoutExtension")
                         .IsRequired()
@@ -304,10 +234,6 @@ namespace MetaPAL.Data.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DataFileId");
-
-                    b.HasIndex("ExperimentId");
 
                     b.ToTable("SpectrumMatch");
                 });
@@ -514,35 +440,6 @@ namespace MetaPAL.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MetaPAL.Models.DataFile", b =>
-                {
-                    b.HasOne("MetaPAL.Models.Experiment", "Experiment")
-                        .WithMany("DataFiles")
-                        .HasForeignKey("ExperimentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Experiment");
-                });
-
-            modelBuilder.Entity("MetaPAL.Models.MetaData", b =>
-                {
-                    b.HasOne("MetaPAL.Models.DataFile", null)
-                        .WithMany("MetaData")
-                        .HasForeignKey("DataFileId");
-                });
-
-            modelBuilder.Entity("MetaPAL.Models.SpectrumMatch", b =>
-                {
-                    b.HasOne("MetaPAL.Models.DataFile", null)
-                        .WithMany("SpectrumMatches")
-                        .HasForeignKey("DataFileId");
-
-                    b.HasOne("MetaPAL.Models.Experiment", null)
-                        .WithMany("SpectrumMatches")
-                        .HasForeignKey("ExperimentId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -592,20 +489,6 @@ namespace MetaPAL.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MetaPAL.Models.DataFile", b =>
-                {
-                    b.Navigation("MetaData");
-
-                    b.Navigation("SpectrumMatches");
-                });
-
-            modelBuilder.Entity("MetaPAL.Models.Experiment", b =>
-                {
-                    b.Navigation("DataFiles");
-
-                    b.Navigation("SpectrumMatches");
                 });
 #pragma warning restore 612, 618
         }
