@@ -1,0 +1,144 @@
+﻿@model MetaPAL.Models.MsDataScanModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>MsDataScanModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="ScanNumber" class="control-label"></label>
+                <input asp-for="ScanNumber" class="form-control" />
+                <span asp-validation-for="ScanNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SpectrumRepresentation" class="control-label"></label>
+                <select asp-for="SpectrumRepresentation" class="form-control"></select>
+                <span asp-validation-for="SpectrumRepresentation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MassSpectrumType" class="control-label"></label>
+                <select asp-for="MassSpectrumType" class="form-control"></select>
+                <span asp-validation-for="MassSpectrumType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MsLevel" class="control-label"></label>
+                <input asp-for="MsLevel" class="form-control" />
+                <span asp-validation-for="MsLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MassAnalyzerType" class="control-label"></label>
+                <select asp-for="MassAnalyzerType" class="form-control"></select>
+                <span asp-validation-for="MassAnalyzerType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScanPolarity" class="control-label"></label>
+                <select asp-for="ScanPolarity" class="form-control"></select>
+                <span asp-validation-for="ScanPolarity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScanStartTime" class="control-label"></label>
+                <input asp-for="ScanStartTime" class="form-control" />
+                <span asp-validation-for="ScanStartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScanWindowUpperLimit" class="control-label"></label>
+                <input asp-for="ScanWindowUpperLimit" class="form-control" />
+                <span asp-validation-for="ScanWindowUpperLimit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScanWindowLowerLimit" class="control-label"></label>
+                <input asp-for="ScanWindowLowerLimit" class="form-control" />
+                <span asp-validation-for="ScanWindowLowerLimit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FilterString" class="control-label"></label>
+                <input asp-for="FilterString" class="form-control" />
+                <span asp-validation-for="FilterString" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalIonCurrent" class="control-label"></label>
+                <input asp-for="TotalIonCurrent" class="form-control" />
+                <span asp-validation-for="TotalIonCurrent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IonInjectionTime" class="control-label"></label>
+                <input asp-for="IonInjectionTime" class="form-control" />
+                <span asp-validation-for="IonInjectionTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrecursorScanNumber" class="control-label"></label>
+                <input asp-for="PrecursorScanNumber" class="form-control" />
+                <span asp-validation-for="PrecursorScanNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedIonMz" class="control-label"></label>
+                <input asp-for="SelectedIonMz" class="form-control" />
+                <span asp-validation-for="SelectedIonMz" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExperimentalPrecursorMonoisotopicMz" class="control-label"></label>
+                <input asp-for="ExperimentalPrecursorMonoisotopicMz" class="form-control" />
+                <span asp-validation-for="ExperimentalPrecursorMonoisotopicMz" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsolationWindowTargetMz" class="control-label"></label>
+                <input asp-for="IsolationWindowTargetMz" class="form-control" />
+                <span asp-validation-for="IsolationWindowTargetMz" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsolationWindowLowerOffset" class="control-label"></label>
+                <input asp-for="IsolationWindowLowerOffset" class="form-control" />
+                <span asp-validation-for="IsolationWindowLowerOffset" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsolationWindowUpperOffset" class="control-label"></label>
+                <input asp-for="IsolationWindowUpperOffset" class="form-control" />
+                <span asp-validation-for="IsolationWindowUpperOffset" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DissociationMethod" class="control-label"></label>
+                <input asp-for="DissociationMethod" class="form-control" />
+                <span asp-validation-for="DissociationMethod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NormalizedCollisionEnergy" class="control-label"></label>
+                <input asp-for="NormalizedCollisionEnergy" class="form-control" />
+                <span asp-validation-for="NormalizedCollisionEnergy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedIonChargeStateGuess" class="control-label"></label>
+                <input asp-for="SelectedIonChargeStateGuess" class="form-control" />
+                <span asp-validation-for="SelectedIonChargeStateGuess" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedIonIntensity" class="control-label"></label>
+                <input asp-for="SelectedIonIntensity" class="form-control" />
+                <span asp-validation-for="SelectedIonIntensity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NativeId" class="control-label"></label>
+                <input asp-for="NativeId" class="form-control" />
+                <span asp-validation-for="NativeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
