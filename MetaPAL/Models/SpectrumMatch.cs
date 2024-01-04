@@ -44,7 +44,6 @@ namespace MetaPAL.Models
 
         #endregion
 
-
         #region Spectral Information
 
         // TODO: Turn into a foreign key to the datafile table

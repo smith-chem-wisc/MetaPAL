@@ -1,11 +1,18 @@
 ﻿using MassSpectrometry;
+using MathNet.Numerics.RootFinding;
+using MetaPAL.ControlledVocabulary;
+using Microsoft.CodeAnalysis;
+using MzLibUtil.NoiseEstimation;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static MetaPAL.Models.PsiMsTypes;
+using System.Reflection.Metadata;
+using ThermoFisher.CommonCore.Data.Business;
+using static MetaPAL.ControlledVocabulary.PsiMsTypes;
 
 namespace MetaPAL.Models
 {
-    [Table("MsDataScan")]
+    [Table("MsDataScans")]
     public class MsDataScanModel
     {
         [Key]
@@ -64,6 +71,7 @@ namespace MetaPAL.Models
         /// is_a: MS:1000524 ! data file content
         /// is_a: MS:1000559 ! spectrum type
         /// </summary>
+        // TODO: Figure out what to do here as object is not a valid type for a database column
         [NotMapped]
         public Object? MassSpectrum { get; protected set; }
         /// <summary>
@@ -232,7 +240,7 @@ namespace MetaPAL.Models
                 ScanWindowLowerLimit = (float)scan.ScanWindowRange.Minimum,
                 ScanWindowUpperLimit = (float)scan.ScanWindowRange.Maximum,
                 FilterString = scan.ScanFilter,
-                MassAnalyzerType = scan.MzAnalyzer.ToMassAnalyzerType(),
+                MassAnalyzerType = scan.MzAnalyzer.ToMassAnalyzerType(), 
                 TotalIonCurrent = (float)scan.TotalIonCurrent,
                 IonInjectionTime = (float?)scan.InjectionTime,
                 NativeId = scan.NativeId,
