@@ -42,24 +42,25 @@
     </dt>
     <body>
 
-        <div style="width: 100%;">
-            <div style="width: auto; height: auto; float: left;">
-                <h3>b-ions</h3>
-                @foreach (var item in Model.MatchedFragmentIons.Split(';')
-                    .Where(x => x.Contains("b")))
-                {
-                    <li>@item</li>
-                }
-            </div>
-            <div style="margin-left: 35%; height: auto;">
-                <h3>y-ions</h3>
-                @foreach (var item in Model.MatchedFragmentIons.Split(';')
-                    .Where(x => x.Contains("y")))
-                {
-                    <li>@item</li>
-                }
-            </div>
+    <div style="width: 100%;">
+        <div style="width: auto; height: auto; float: left;">
+            <h3>b-ions</h3>
+            @foreach (var item in Model.MatchedFragmentIons.Split(';')
+                .Where(x => x.Contains("b")))
+            {
+                <li>@item</li>
+            }
         </div>
+        <div style="margin-left: 35%; height: auto;">
+            <h3>y-ions</h3>
+            @foreach (var item in Model.MatchedFragmentIons.Split(';')
+                .Where(x => x.Contains("y")))
+            {
+                <li>@item</li>
+            }
+        </div>
+    </div>
+    </body>
         <hr />
 
         <dt class="col-sm-2">
