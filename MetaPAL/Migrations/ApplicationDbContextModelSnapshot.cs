@@ -17,6 +17,86 @@ namespace MetaPAL.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.23");
 
+            modelBuilder.Entity("MetaPAL.Models.MsDataScanModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("DissociationMethod")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float?>("ExperimentalPrecursorMonoisotopicMz")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("FilterString")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float?>("IonInjectionTime")
+                        .HasColumnType("REAL");
+
+                    b.Property<float?>("IsolationWindowLowerOffset")
+                        .HasColumnType("REAL");
+
+                    b.Property<float?>("IsolationWindowTargetMz")
+                        .HasColumnType("REAL");
+
+                    b.Property<float?>("IsolationWindowUpperOffset")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("MassAnalyzerType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MassSpectrumType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MsLevel")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("NativeId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float?>("NormalizedCollisionEnergy")
+                        .HasColumnType("REAL");
+
+                    b.Property<int?>("PrecursorScanNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ScanNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ScanPolarity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float?>("ScanStartTime")
+                        .HasColumnType("REAL");
+
+                    b.Property<float?>("ScanWindowLowerLimit")
+                        .HasColumnType("REAL");
+
+                    b.Property<float?>("ScanWindowUpperLimit")
+                        .HasColumnType("REAL");
+
+                    b.Property<int?>("SelectedIonChargeStateGuess")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float?>("SelectedIonIntensity")
+                        .HasColumnType("REAL");
+
+                    b.Property<float?>("SelectedIonMz")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("SpectrumRepresentation")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float?>("TotalIonCurrent")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MsDataScan");
+                });
+
             modelBuilder.Entity("MetaPAL.Models.SpectrumMatch", b =>
                 {
                     b.Property<int>("Id")
@@ -123,6 +203,9 @@ namespace MetaPAL.Migrations
 
                     b.Property<double?>("RetentionTime")
                         .HasColumnType("REAL");
+
+                    b.Property<int>("ScanId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<double?>("Score")
                         .HasColumnType("REAL");

@@ -1,17 +1,11 @@
 ﻿using MassSpectrometry;
-using MathNet.Numerics.RootFinding;
-using Microsoft.CodeAnalysis;
-using MzLibUtil.NoiseEstimation;
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection.Metadata;
-using ThermoFisher.CommonCore.Data.Business;
 using static MetaPAL.Models.PsiMsTypes;
 
 namespace MetaPAL.Models
 {
-    [Table("SpectrumMatch")]
+    [Table("MsDataScan")]
     public class MsDataScanModel
     {
         [Key]
@@ -70,6 +64,7 @@ namespace MetaPAL.Models
         /// is_a: MS:1000524 ! data file content
         /// is_a: MS:1000559 ! spectrum type
         /// </summary>
+        [NotMapped]
         public Object? MassSpectrum { get; protected set; }
         /// <summary>
         /// id: MS:1000465
@@ -237,7 +232,7 @@ namespace MetaPAL.Models
                 ScanWindowLowerLimit = (float)scan.ScanWindowRange.Minimum,
                 ScanWindowUpperLimit = (float)scan.ScanWindowRange.Maximum,
                 FilterString = scan.ScanFilter,
-                MassAnalyzerType = scan.MzAnalyzer.ToMassAnalyzerType(), 
+                MassAnalyzerType = scan.MzAnalyzer.ToMassAnalyzerType(),
                 TotalIonCurrent = (float)scan.TotalIonCurrent,
                 IonInjectionTime = (float?)scan.InjectionTime,
                 NativeId = scan.NativeId,
