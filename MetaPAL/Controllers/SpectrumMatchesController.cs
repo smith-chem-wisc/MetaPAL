@@ -17,294 +17,271 @@ namespace MetaPAL.Controllers
         }
 
         // GET: SpectrumMatches
-        public async Task<IActionResult> Index(SortingOptions sortingParameter = SortingOptions.Default)
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber,
+            SortingOptions sortingParameter = SortingOptions.Default)
         {
             // TEMPORARY: remove all spectrum matches from database
             //await Task.Run(() => DataOperations.DataOperations.RemoveAll<SpectrumMatch>(_context));
 
+            //pagination 
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            int pageSize = 50;
+
             //big switch statement for sorting the database by different parameters
             #region SortingParametersSwitch
+
+
 
             switch (sortingParameter)
             {
                 case SortingOptions.Default:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .AsNoTracking(),
+                            pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingAmbiguityLevel:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.AmbiguityLevel)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.AmbiguityLevel)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingAmbiguityLevel:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.MatchedFragmentIons)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.AmbiguityLevel)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingDeltaScore:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.DeltaScore)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.DeltaScore)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingDeltaScore:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.DeltaScore)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.DeltaScore)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingMassDiffDa:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.MassDiffDa)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.MassDiffDa)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingMassDiffDa:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.MassDiffDa)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.MassDiffDa)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingMassDiffPpm:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.MassDiffPpm)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.MassDiffPpm)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingMassDiffPpm:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.MassDiffPpm)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.MassDiffPpm)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
+                //todo: fix this
                 case SortingOptions.AscendingMatchedFragmentIons:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.MatchedFragmentIons)
-                            .ToListAsync());
-
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.MatchedFragmentIons)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
+                //todo:fix this
                 case SortingOptions.DescendingMatchedFragmentIons:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.MatchedFragmentIons)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.MatchedFragmentIons)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingMissedCleavage:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.MissedCleavage)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.MissedCleavage)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingMissedCleavage:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.MissedCleavage)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.MissedCleavage)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingMonoisotopicMass:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.MonoisotopicMass)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.MonoisotopicMass)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingMonoisotopicMass:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.MonoisotopicMass)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.MonoisotopicMass)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingPEP_QValue:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.PEP_QValue)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.PEP_QValue)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingPEP_QValue:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.PEP_QValue)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.PEP_QValue)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingPEP:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.PEP)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.PEP)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingPEP:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.PEP)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.PEP)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingPrecursorCharge:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.PrecursorCharge)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.PrecursorCharge)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingPrecursorCharge:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.PrecursorCharge)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.PrecursorCharge)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingPrecursorMass:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.PrecursorMass)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.PrecursorMass)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingPrecursorMass:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.PrecursorMass)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.PrecursorMass)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingPrecursorMz:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.PrecursorMz)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.PrecursorMz)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingPrecursorMz:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.PrecursorMz)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.PrecursorMz)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.Target:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .Where(x => x.DecoyContamTarget == "T")
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .Where(x => x.DecoyContamTarget == "T")
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.Decoy:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .Where(x => x.DecoyContamTarget == "D")
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .Where(x => x.DecoyContamTarget == "D")
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.Contaminant:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .Where(x => x.DecoyContamTarget == "C")
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .Where(x => x.DecoyContamTarget == "C")
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingPrecursorScanNum:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.PrecursorScanNumber)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.PrecursorScanNumber)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingPrecursorScanNum:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.PrecursorScanNumber)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.PrecursorScanNumber)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingQValue:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.QValue)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.QValue)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingQValue:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.QValue)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.QValue)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingRetentionTime:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.RetentionTime)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.RetentionTime)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingRetentionTime:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.RetentionTime)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.RetentionTime)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingScore:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.Score)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.Score)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingScore:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.Score)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.Score)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingSpliceSites:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.SpliceSites)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.SpliceSites)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingSpliceSites:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.SpliceSites)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.SpliceSites)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.AscendingTotalIonCurrent:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderBy(x => x.TotalIonCurrent)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderBy(x => x.TotalIonCurrent)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
 
                 case SortingOptions.DescendingTotalIonCurrent:
-                    return _context.SpectrumMatch == null ?
-                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
-                        View(await _context.SpectrumMatch
-                            .OrderByDescending(x => x.TotalIonCurrent)
-                            .ToListAsync());
+                    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+                        .CreateAsync(_context.SpectrumMatch
+                                .OrderByDescending(x => x.TotalIonCurrent)
+                                .AsNoTracking(), pageNumber ?? 1, pageSize));
             }
 
             #endregion
@@ -593,22 +570,22 @@ namespace MetaPAL.Controllers
         }
 
 
-        public async Task<IActionResult> Index(string currentFilter, string searchString,
-            int? pageNumber)
-        {
+        //public async Task<IActionResult> Index(string currentFilter, string searchString,
+        //    int? pageNumber)
+        //{
 
-            if (searchString != null)
-            {
-                pageNumber = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+        //    if (searchString != null)
+        //    {
+        //        pageNumber = 1;
+        //    }
+        //    else
+        //    {
+        //        searchString = currentFilter;
+        //    }
 
-            int pageSize = 50;
-            return View(await DatabasePagination.PaginatedList<SpectrumMatch>
-                .CreateAsync(_context.SpectrumMatch.AsNoTracking(), pageNumber ?? 1, pageSize));
-        }
+        //    int pageSize = 50;
+        //    return View(await DatabasePagination.PaginatedList<SpectrumMatch>
+        //        .CreateAsync(_context.SpectrumMatch.AsNoTracking(), pageNumber ?? 1, pageSize));
+        //}
     }
 }
