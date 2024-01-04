@@ -1,6 +1,4 @@
-﻿using BayesianEstimation;
-using MathNet.Numerics;
-using MetaPAL.Data;
+﻿using MetaPAL.Data;
 using MetaPAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +27,7 @@ namespace MetaPAL.Controllers
 
             switch (sortingParameter)
             {
-                case SortingOptions.Default: 
+                case SortingOptions.Default:
                     return _context.SpectrumMatch == null ?
                         Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
                         View(await _context.SpectrumMatch
@@ -104,6 +102,209 @@ namespace MetaPAL.Controllers
                         View(await _context.SpectrumMatch
                             .OrderByDescending(x => x.MatchedFragmentIons)
                             .ToListAsync());
+
+                case SortingOptions.AscendingMissedCleavage:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.MissedCleavage)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingMissedCleavage:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.MissedCleavage)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingMonoisotopicMass:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.MonoisotopicMass)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingMonoisotopicMass:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.MonoisotopicMass)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingPEP_QValue:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.PEP_QValue)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingPEP_QValue:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.PEP_QValue)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingPEP:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.PEP)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingPEP:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.PEP)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingPrecursorCharge:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.PrecursorCharge)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingPrecursorCharge:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.PrecursorCharge)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingPrecursorMass:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.PrecursorMass)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingPrecursorMass:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.PrecursorMass)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingPrecursorMz:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.PrecursorMz)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingPrecursorMz:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.PrecursorMz)
+                            .ToListAsync());
+
+                case SortingOptions.Target:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .Where(x => x.DecoyContamTarget == "T")
+                            .ToListAsync());
+
+                case SortingOptions.Decoy:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .Where(x => x.DecoyContamTarget == "D")
+                            .ToListAsync());
+
+                case SortingOptions.Contaminant:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .Where(x => x.DecoyContamTarget == "C")
+                            .ToListAsync());
+
+                case SortingOptions.AscendingPrecursorScanNum:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.PrecursorScanNumber)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingPrecursorScanNum:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.PrecursorScanNumber)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingQValue:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.QValue)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingQValue:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.QValue)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingRetentionTime:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.RetentionTime)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingRetentionTime:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.RetentionTime)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingScore:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.Score)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingScore:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.Score)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingSpliceSites:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.SpliceSites)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingSpliceSites:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.SpliceSites)
+                            .ToListAsync());
+
+                case SortingOptions.AscendingTotalIonCurrent:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderBy(x => x.TotalIonCurrent)
+                            .ToListAsync());
+
+                case SortingOptions.DescendingTotalIonCurrent:
+                    return _context.SpectrumMatch == null ?
+                        Problem("Entity set 'ApplicationDbContext.SpectrumMatch'  is null.") :
+                        View(await _context.SpectrumMatch
+                            .OrderByDescending(x => x.TotalIonCurrent)
+                            .ToListAsync());
             }
 
             #endregion
@@ -122,7 +323,7 @@ namespace MetaPAL.Controllers
         }
 
         //Sorting Enum
-#region SortingEnum
+        #region SortingEnum
         public enum SortingOptions
         {
             Default,
@@ -140,8 +341,6 @@ namespace MetaPAL.Controllers
             DescendingRetentionTime,
             AscendingScore,
             DescendingScore,
-            AscendingSpectrumMatchCount,
-            DescendingSpectrumMatchCount,
             AscendingQValue,
             DescendingQValue,
             AscendingPEP,
@@ -168,7 +367,7 @@ namespace MetaPAL.Controllers
             Contaminant,
             Target
         }
-#endregion
+        #endregion
         // GET: UploadSpectrumMatches
         public async Task<IActionResult> UploadSpectralMatches(string PsmPath)
         {
