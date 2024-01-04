@@ -4,6 +4,7 @@ using MetaPAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MetaPAL.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240103173104_DecoupleSpectrumMatchModel")]
+    partial class DecoupleSpectrumMatchModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,88 +23,6 @@ namespace MetaPAL.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("MetaPAL.Models.MsDataScanModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("DissociationMethod")
-                        .HasColumnType("int");
-
-                    b.Property<float?>("ExperimentalPrecursorMonoisotopicMz")
-                        .HasColumnType("real");
-
-                    b.Property<string>("FilterString")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float?>("IonInjectionTime")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("IsolationWindowLowerOffset")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("IsolationWindowTargetMz")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("IsolationWindowUpperOffset")
-                        .HasColumnType("real");
-
-                    b.Property<int>("MassAnalyzerType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MassSpectrumType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MsLevel")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NativeId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float?>("NormalizedCollisionEnergy")
-                        .HasColumnType("real");
-
-                    b.Property<int?>("PrecursorScanNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ScanNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ScanPolarity")
-                        .HasColumnType("int");
-
-                    b.Property<float?>("ScanStartTime")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("ScanWindowLowerLimit")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("ScanWindowUpperLimit")
-                        .HasColumnType("real");
-
-                    b.Property<int?>("SelectedIonChargeStateGuess")
-                        .HasColumnType("int");
-
-                    b.Property<float?>("SelectedIonIntensity")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("SelectedIonMz")
-                        .HasColumnType("real");
-
-                    b.Property<int>("SpectrumRepresentation")
-                        .HasColumnType("int");
-
-                    b.Property<float?>("TotalIonCurrent")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MsDataScans");
-                });
 
             modelBuilder.Entity("MetaPAL.Models.SpectrumMatch", b =>
                 {
