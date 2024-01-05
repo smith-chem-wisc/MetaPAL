@@ -30,5 +30,27 @@ namespace Test
             Assert.That(last.OrganismId, Is.EqualTo(654931));
 
         }
+
+        [Test]
+        public void TestAddOrganismsToDatabase()
+        {
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData", "Organism.tsv");
+            var file = new OrganismFile(path);
+            file.LoadResults();
+
+            var organisms = file.Results;
+            using var Context = new TestingDbContext();
+
+            if (Context.Database.EnsureCreated())
+            {
+                Context.Organisms.AddRange(organisms);
+                Context.SaveChanges();
+
+            }
+
+            organisms = Context.Organisms.ToList();
+            Assert.That(organisms.Count(), Is.EqualTo(25));
+            CollectionAssert.AreEquivalent(file.Results, organisms);
+        }
     }
 }
