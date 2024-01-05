@@ -20,12 +20,11 @@ namespace MetaPAL.Data
         }
 
         public DbSet<SpectrumMatch>? SpectrumMatch { get; set; }
-
         public DbSet<MsDataScanModel> MsDataScans { get; set; }
-
         public DbSet<DataFile> MsDataFiles { get; set; }
         public DbSet<Experiment> Experiments { get; set; }
         public DbSet<MetaData> MetaData { get; set; }
+        public DbSet<Organism> Organisms { get; set; }
     }
 
     
