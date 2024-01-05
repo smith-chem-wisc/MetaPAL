@@ -1,0 +1,26 @@
+Proteome Id	Organism	Organism Id	Protein count
+UP000000625	Escherichia coli (strain K12)	83333	4404
+UP000002311	Saccharomyces cerevisiae (strain ATCC 204508 / S288c) (Baker's yeast)	559292	6060
+UP000000589	Mus musculus (Mouse)	10090	55086
+UP000000803	Drosophila melanogaster (Fruit fly)	7227	22075
+UP000001570	Bacillus subtilis (strain 168)	224308	4260
+UP000002494	Rattus norvegicus (Rat)	10116	47943
+UP000005640	Homo sapiens (Human)	9606	82685
+UP000006548	Arabidopsis thaliana (Mouse-ear cress)	3702	39282
+UP000009136	Bos taurus (Bovine)	9913	37503
+UP000000437	Danio rerio (Zebrafish) (Brachydanio rerio)	7955	46580
+UP000001940	Caenorhabditis elegans	6239	26696
+UP000002195	Dictyostelium discoideum (Social amoeba)	44689	12734
+UP000059680	Oryza sativa subsp. japonica (Rice)	39947	48898
+UP000000278	Dugbe virus (isolate ArD44313) (DUGV)	766194	3
+UP000000287	Woodchuck hepatitis B virus (isolate 8) (WHV)	10433	5
+UP000000353	Equine arteritis virus (strain Bucyrus) (EAV)	299386	9
+UP000000354	Severe acute respiratory syndrome coronavirus (SARS-CoV)	694009	15
+UP000000355	Breda virus 1 (BRV-1)	360393	6
+UP000000356	Poliovirus type 1 (strain Mahoney)	12081	2
+UP000000357	Avian encephalomyelitis virus (strain Calnek vaccine) (AEV)	475778	1
+UP000000360	Yellow fever virus (strain 17D vaccine) (YFV)	11090	1
+UP000000401	Turnip yellow mosaic virus	12154	3
+UP000000409	Broad bean wilt virus 1 (strain Spinach/United States/ATCC PV-132/1963) (BBWV-1)	649895	2
+UP000000413	Rabbit hemorrhagic disease virus (strain Rabbit/Germany/FRG/1989) (Ra/LV/RHDV/GH/1989/GE) (RHDV-FRG)	314536	2
+UP000000515	Drosophila x virus (isolate Chung/1996) (DXV)	654931	3
