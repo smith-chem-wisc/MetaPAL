@@ -1,0 +1,167 @@
+﻿@model IEnumerable<MetaPAL.Models.MsDataScanModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ScanNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpectrumRepresentation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MassSpectrumType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MsLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MassAnalyzerType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScanPolarity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScanStartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScanWindowUpperLimit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScanWindowLowerLimit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FilterString)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalIonCurrent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IonInjectionTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecursorScanNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SelectedIonMz)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExperimentalPrecursorMonoisotopicMz)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsolationWindowTargetMz)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsolationWindowLowerOffset)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsolationWindowUpperOffset)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DissociationMethod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NormalizedCollisionEnergy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SelectedIonChargeStateGuess)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SelectedIonIntensity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NativeId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScanNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpectrumRepresentation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MassSpectrumType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MsLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MassAnalyzerType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScanPolarity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScanStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScanWindowUpperLimit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScanWindowLowerLimit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FilterString)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalIonCurrent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IonInjectionTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecursorScanNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SelectedIonMz)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExperimentalPrecursorMonoisotopicMz)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsolationWindowTargetMz)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsolationWindowLowerOffset)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsolationWindowUpperOffset)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DissociationMethod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NormalizedCollisionEnergy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SelectedIonChargeStateGuess)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SelectedIonIntensity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NativeId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
